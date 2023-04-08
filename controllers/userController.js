@@ -11,7 +11,7 @@ export const login = expressAsync(async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        isAdmin: user.isAdmin,
+        role: user.role,
         approved: user.approved,
         phone: user.phone,
         address: user.address,
@@ -30,10 +30,15 @@ export const login = expressAsync(async (req, res) => {
 
 export const createUser = expressAsync(async (req, res) => {
   try {
+    const { name, email, password, phone, address, city, country } = req.body;
     const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
+        name,
+        email,
+        password,
+        phone,
+        address,
+        city,
+        country,
     });
 
     const createdUser = await user.save();
@@ -93,7 +98,7 @@ export const getUserProfileById = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      role: user.role,
       approved: user.approved,
       phone: user.phone,
       address: user.address,
