@@ -5,7 +5,7 @@ import colors from "colors";
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(
-      "mongodb+srv://abdirahmankaahiye25:abdirahmankaahiye25@ecommerce.myndhb3.mongodb.net/Travel?retryWrites=true&w=majority"
+      process.env.MONG_URL
     );
 
     console.log(`MongpDB Connected ${conn.connection.host}`.cyan.underline);
