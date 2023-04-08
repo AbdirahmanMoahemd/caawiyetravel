@@ -7,7 +7,7 @@ export const login = expressAsync(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
-      res.json({
+      res.status(200).json({
         _id: user._id,
         name: user.name,
         email: user.email,
@@ -42,7 +42,7 @@ export const createUser = expressAsync(async (req, res) => {
     });
 
     const createdUser = await user.save();
-    res.status(201).json(createdUser);
+    res.status(200);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -52,7 +52,7 @@ export const getAllUser = expressAsync(async (req, res) => {
   try {
     const users = await User.find();
 
-    res.json(users);
+    res.status(200).json(users);
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -65,7 +65,7 @@ export const updateUser = expressAsync(async (req, res) => {
     const user = await User.findByIdAndUpdate(id, req.body);
     if (user) {
       const updatedUser = await User.findById(id);
-      res.json(updatedUser);
+      res.status(200).json(updatedUser);
     } else {
       res.status(404).json({ message: "User not found" });
     }
@@ -80,7 +80,7 @@ export const deletUser = expressAsync(async (req, res) => {
 
     const user = await User.findByIdAndDelete(id, req.body);
     if (user) {
-      res.json({ message: "SucessFully Deleted" });
+      res.status(200).json({ message: "SucessFully Deleted" });
     } else {
       res.status(404).json({ message: "User not found" });
     }
@@ -94,7 +94,7 @@ export const getUserProfileById = async (req, res) => {
   const { token } = req.body;
 
   if (user) {
-    res.json({
+    res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
