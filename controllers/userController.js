@@ -31,18 +31,38 @@ export const login = expressAsync(async (req, res) => {
 export const createUser = expressAsync(async (req, res) => {
   try {
     const { name, email, password, phone, address, city, country } = req.body;
-    const user = new User({
-        name,
-        email,
-        password,
-        phone,
-        address,
-        city,
-        country,
-    });
+    const userExists = await User.findOne({ email });
 
-    const createdUser = await user.save();
-    res.status(200);
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    phone,
+    address,
+    city,
+    country,
+  });
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      approved: user.approved,
+      phone: user.phone,
+      address: user.address,
+      city: user.city,
+      country: user.country,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(500).json({ error: e.message });
+  }
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
