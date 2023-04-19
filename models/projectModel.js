@@ -10,6 +10,11 @@ const projectSchema = mongoose.Schema(
       type: Number,
       require: true,
     },
+    category: {
+      type: Number,
+      require: true,
+      default:1
+    },
     image: {
       type: String,
       require: true,
@@ -29,6 +34,6 @@ const projectSchema = mongoose.Schema(
   }
 );
 
-const Project = mongoose.model("Project", projectSchema);
+const Project = mongoose.model("Projects", projectSchema);
 
 export default Project;
