@@ -1,5 +1,7 @@
 import expressAsync from "express-async-handler";
 import User from "../models/usersModel.js";
+import generateToken from '../utils/generateToken.js'
+
 
 export const login = expressAsync(async (req, res) => {
   try {
