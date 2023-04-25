@@ -13,9 +13,10 @@ export const getProjects = expressAsync(async (req, res) => {
 
 export const createProject = expressAsync(async (req, res) => {
   try {
-    const { title, price, image, category, description } = req.body;
+    const {user, title, price, image, category, description } = req.body;
 
     const project = await Project.create({
+      user,
       title,
       price,
       category,
