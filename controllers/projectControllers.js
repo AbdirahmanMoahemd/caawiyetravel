@@ -111,3 +111,26 @@ export const updateProjectApproved = expressAsync(async (req, res) => {
     throw new Error("Product Not Found");
   }
 });
+
+
+
+// @desc    Delete a product
+// @route   GET /api/product/:id
+// @access  Private/Admin
+export const deleteProject = expressAsync(async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (project) {
+      await project.remove();
+      res.json({
+        message: "project removed",
+      });
+    } 
+    
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+    throw new Error("project Not Found");
+  }
+
+});
