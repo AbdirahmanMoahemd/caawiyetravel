@@ -13,6 +13,7 @@ const projectSchema = mongoose.Schema(
     price: {
       type: Number,
       require: true,
+      default:0.0
     },
     category: {
       type: Number,

@@ -46,3 +46,31 @@ export const createProject = expressAsync(async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 });
+
+
+export const updateProject = expressAsync(async (req, res) => {
+  try {
+    const { title, price, image, category, description } = req.body;
+
+
+
+    const project = await Project.findById(req.params.id)
+    if (project) {
+      project.title = title;
+      project.price = price;
+      project.image = image;
+      project.category = category;
+      project.description = description;
+      
+    }
+    
+    const updatedProject = project.save();
+
+   
+  
+      res.json(updatedProject);
+    
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
