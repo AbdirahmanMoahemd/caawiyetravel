@@ -13,6 +13,17 @@ export const getProjects = expressAsync(async (req, res) => {
 });
 
 
+export const getUSAProjects = expressAsync(async (req, res) => {
+  try {
+    const projects = await Project.find({approved: true, category: 1});
+
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
+
 export const getMyProjects = expressAsync(async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -24,7 +35,8 @@ export const getMyProjects = expressAsync(async (req, res) => {
    
   } catch (error) {
     res.status(404).json({ error: error.message });
-  }
+    throw new Error("Product Not Found");
+  } 
 });
 
 export const createProject = expressAsync(async (req, res) => {
@@ -72,5 +84,30 @@ export const updateProject = expressAsync(async (req, res) => {
     
   } catch (error) {
     res.status(404).json({ error: error.message });
+    throw new Error("Product Not Found");
+  }
+});
+
+
+
+export const updateProjectApproved = expressAsync(async (req, res) => {
+  try {
+
+
+    const project = await Project.findById(req.params.id)
+    if (project) {
+      project.approved = true;
+      
+    }
+    
+    const updatedProject = project.save();
+
+   
+  
+      res.json(updatedProject);
+    
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+    throw new Error("Product Not Found");
   }
 });

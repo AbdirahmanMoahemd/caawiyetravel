@@ -26,11 +26,6 @@ const userSchema = mongoose.Schema(
     country: {
       type: String,
     },
-    approved: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
   },
   {
     timestamps: true,

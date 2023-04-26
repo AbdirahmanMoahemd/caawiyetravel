@@ -1,7 +1,6 @@
 import expressAsync from "express-async-handler";
 import User from "../models/usersModel.js";
-import generateToken from '../utils/generateToken.js'
-
+import generateToken from "../utils/generateToken.js";
 
 export const login = expressAsync(async (req, res) => {
   try {
@@ -35,36 +34,36 @@ export const createUser = expressAsync(async (req, res) => {
     const { name, email, password, phone, address, city, country } = req.body;
     const userExists = await User.findOne({ email });
 
-  if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
-  }
+    if (userExists) {
+      res.status(400);
+      throw new Error("User already exists");
+    }
 
-  const user = await User.create({
-    name,
-    email,
-    password,
-    phone,
-    address,
-    city,
-    country,
-  });
-  if (user) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      approved: user.approved,
-      phone: user.phone,
-      address: user.address,
-      city: user.city,
-      country: user.country,
-      token: generateToken(user._id),
+    const user = await User.create({
+      name,
+      email,
+      password,
+      phone,
+      address,
+      city,
+      country,
     });
-  } else {
-    res.status(500).json({ error: e.message });
-  }
+    if (user) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        approved: user.approved,
+        phone: user.phone,
+        address: user.address,
+        city: user.city,
+        country: user.country,
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(500).json({ error: e.message });
+    }
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
@@ -133,3 +132,20 @@ export const getUserProfileById = async (req, res) => {
     throw new Error("User Not Found");
   }
 };
+
+export const updateUserRole = expressAsync(async (req, res) => {
+  try {
+    const { role } = req.body;
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.role = role;
+    }
+
+    const updatedUser = user.save();
+
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+    throw new Error("User Not Found");
+  }
+});
