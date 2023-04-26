@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema(
     role: {
       type: Number,
       require: true,
-      default: 0,
+      default: 1,
     },
     phone: {
       type: String,
@@ -26,6 +26,22 @@ const userSchema = mongoose.Schema(
     country: {
       type: String,
     },
+    requests: [
+      {
+        project: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Projects",
+        },
+      },
+    ],
+    wishlist: [
+      {
+        project: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Projects",
+        },
+      },
+    ],
   },
   {
     timestamps: true,

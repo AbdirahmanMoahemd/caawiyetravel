@@ -1,10 +1,11 @@
 import express from 'express'
-import { createUser, deletUser, getAllUser, getUserProfileById, login, updateUser, updateUserRole } from '../controllers/userController.js'
+import { createBuyerUser, createUser, deletUser, getAllUser, getUserProfileById, login, updateUser, updateUserRole } from '../controllers/userController.js'
 import { admin, protect } from '../middlewares/authMiddleware.js'
 
 const router = express.Router()
 
 router.route('/').get(getAllUser).post(createUser)
+router.route('/register').post(createBuyerUser)
 router.route('/:id').put(updateUser).delete(deletUser)
 router.route('/login').post(login)
 router.route('/profile/:id').post(getUserProfileById)
