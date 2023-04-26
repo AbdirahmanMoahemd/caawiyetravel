@@ -24,6 +24,19 @@ export const getUSAProjects = expressAsync(async (req, res) => {
 });
 
 
+
+
+export const getCANADAProjects = expressAsync(async (req, res) => {
+  try {
+    const projects = await Project.find({approved: true, category: 2});
+
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
+
 export const getMyProjects = expressAsync(async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
