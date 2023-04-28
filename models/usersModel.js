@@ -32,6 +32,11 @@ const userSchema = mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           ref: "Projects",
         },
+        status: {
+          type:Boolean,
+          required:true,
+          default:false
+        }
       },
     ],
     wishlist: [

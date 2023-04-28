@@ -1,11 +1,13 @@
 import expressAsync from "express-async-handler";
 import User from "../models/usersModel.js";
 import generateToken from "../utils/generateToken.js";
+import Project from "../models/projectModel.js";
 
 export const login = expressAsync(async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("requests.project")
+    .populate("wishlist.project");;
 
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
@@ -18,10 +20,12 @@ export const login = expressAsync(async (req, res) => {
         address: user.address,
         country: user.country,
         city: user.city,
+        requests: user.requests,
+        wishlist: user.wishlist,
         token: generateToken(user._id),
       });
     } else {
-      res.status(401);
+      res.status(401).json({ error: error.message });
       throw new Error("Invalid email or password");
     }
   } catch (e) {
@@ -35,7 +39,7 @@ export const createUser = expressAsync(async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      res.status(400);
+      res.status(400).json({ error: error.message });
       throw new Error("User already exists");
     }
 
@@ -69,14 +73,14 @@ export const createUser = expressAsync(async (req, res) => {
   }
 });
 
-
 export const createBuyerUser = expressAsync(async (req, res) => {
   try {
-    const { name, email, password, phone, address, city, country, role } = req.body;
+    const { name, email, password, phone, address, city, country, role } =
+      req.body;
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      res.status(400);
+      res.status(400).json({ error: error.message });
       throw new Error("User already exists");
     }
 
@@ -88,7 +92,7 @@ export const createBuyerUser = expressAsync(async (req, res) => {
       address,
       city,
       country,
-      role
+      role,
     });
     if (user) {
       res.json({
@@ -113,7 +117,8 @@ export const createBuyerUser = expressAsync(async (req, res) => {
 
 export const getAllUser = expressAsync(async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("requests.project")
+    .populate("wishlist.project");;
 
     res.status(200).json(users);
   } catch (error) {
@@ -153,7 +158,8 @@ export const deletUser = expressAsync(async (req, res) => {
 });
 
 export const getUserProfileById = async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).populate("requests.project")
+  .populate("wishlist.project");;
   const { token } = req.body;
 
   if (user) {
@@ -168,6 +174,8 @@ export const getUserProfileById = async (req, res) => {
       country: user.country,
       city: user.city,
       token,
+      requests: user.requests,
+      wishlist: user.wishlist,
     });
   } else {
     res.status(404);
@@ -189,5 +197,67 @@ export const updateUserRole = expressAsync(async (req, res) => {
   } catch (error) {
     res.status(404).json({ error: error.message });
     throw new Error("User Not Found");
+  }
+});
+
+export const addToRequest = expressAsync(async (req, res) => {
+  try {
+    const { id } = req.body;
+    const project = await Project.findById(id);
+    let user = await User.findById(req.params.id)
+      .populate("requests.project")
+      .populate("wishlist.project");
+
+    if (user.requests.length == 0) {
+      user.requests.push({ project });
+    } else {
+      let isProjectFound = false;
+      for (let i = 0; i < user.requests.length; i++) {
+        if (user.requests[i].project._id.equals(project._id)) {
+          isProjectFound = true;
+        }
+      }
+
+      if (isProjectFound) {
+        return res.status(400).json({ msg: "already added" });
+      } else {
+        user.requests.push({ project });
+      }
+    }
+    user = await user.save();
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+export const addToWishlist = expressAsync(async (req, res) => {
+  try {
+    const { id } = req.body;
+    const project = await Project.findById(id);
+    let user = await User.findById(req.params.id)
+      .populate("requests.project")
+      .populate("wishlist.project");
+
+    if (user.wishlist.length == 0) {
+      user.wishlist.push({ project });
+    } else {
+      let isProjectFound = false;
+      for (let i = 0; i < user.wishlist.length; i++) {
+        if (user.wishlist[i].project._id.equals(project._id)) {
+          isProjectFound = true;
+        }
+      }
+
+      if (isProjectFound) {
+        return res.status(400).json({ msg: "already added" });
+      } else {
+        user.wishlist.push({ project });
+      }
+    }
+    user = await user.save();
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
