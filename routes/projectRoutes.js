@@ -11,7 +11,7 @@ router.route('/register').post(createBuyerUser)
 router.route('/usa/list').get(protect, getUSAProjects)
 router.route('/canada/list').get(protect, getCANADAProjects)
 router.route('/update/:id').put(protect, admin, updateProjectApproved)
-router.route('/:id').put(protect, updateProject).delete(protect, admin, deleteProject)
+router.route('/:id').put(protect, updateProject).delete(protect, deleteProject)
 router.route('/myprojects/:id').get(protect, getMyProjects)
 
 export default router
