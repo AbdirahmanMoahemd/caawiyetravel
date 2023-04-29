@@ -130,10 +130,9 @@ export const updateProjectApproved = expressAsync(async (req, res) => {
 // @access  Private/Admin
 export const deleteProject = expressAsync(async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findByIdAndDelete(req.params.id);
 
     if (project) {
-      await project.remove();
       res.json({
         message: "project removed",
       });
