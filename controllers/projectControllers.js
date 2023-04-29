@@ -52,11 +52,12 @@ export const getMyProjects = expressAsync(async (req, res) => {
 
 export const createProject = expressAsync(async (req, res) => {
   try {
-    const {user, title, price, image, category, description } = req.body;
-
+    const {user, title,owner, available, price, image, category, description } = req.body;
     const project = await Project.create({
       user,
       title,
+      owner,
+      available,
       price,
       category,
       image,
@@ -73,13 +74,15 @@ export const createProject = expressAsync(async (req, res) => {
 
 export const updateProject = expressAsync(async (req, res) => {
   try {
-    const { title, price, image, category, description } = req.body;
+    const { title,owner, available, price, image, category, description } = req.body;
 
 
 
     const project = await Project.findById(req.params.id)
     if (project) {
       project.title = title;
+      project.owner = owner;
+      project.available = available;
       project.price = price;
       project.image = image;
       project.category = category;
