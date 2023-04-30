@@ -10,8 +10,8 @@ router.route('/:id').put(updateUser).delete(deletUser)
 router.route('/login').post(login)
 router.route('/profile/:id').post(getUserProfileById)
 router.route('/role/:id').put(protect, admin, updateUserRole)
-router.route('/add-to-req').post(protect, addToRequest)
-router.route('/add-to-wishlist').post(protect, addToWishlist)
+router.route('/add-to-req/:id').post(protect, addToRequest)
+router.route('/add-to-wishlist/:id').post(protect, addToWishlist)
 
 
 export default router;
