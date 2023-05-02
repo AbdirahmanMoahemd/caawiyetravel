@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-router.route("/").get(protect, admin, getRequests).post(createRequest);
+router.route("/").get(protect, admin, getRequests).post(protect, createRequest);
 router
   .route("/:id")
   .get(protect, getRequestById)
