@@ -122,7 +122,7 @@ export const updateProjectApproved = expressAsync(async (req, res) => {
     
   } catch (error) {
     res.status(404).json({ error: error.message });
-    throw new Error("Product Not Found");
+    throw new Error("Project Not Found");
   }
 });
 

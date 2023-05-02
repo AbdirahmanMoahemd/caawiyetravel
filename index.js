@@ -3,6 +3,7 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import requestRoutes from "./routes/requestRoutes.js";
 import dotenv from 'dotenv'
 import { errorHandler, notFound } from './middlewares/errorMidlleware.js';
 
@@ -16,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use('/api/users', userRoutes)
 app.use('/api/projects', projectRoutes) 
+app.use('/api/requests', requestRoutes) 
 app.use('/api/upload', uploadRoutes)
 
 
