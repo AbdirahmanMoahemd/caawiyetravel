@@ -106,10 +106,11 @@ export const updateProject = expressAsync(async (req, res) => {
 export const updateProjectApproved = expressAsync(async (req, res) => {
   try {
 
+    const { approved } = req.body;
 
     const project = await Project.findById(req.params.id)
     if (project) {
-      project.approved = true;
+      project.approved = approved;
       
     }
     
