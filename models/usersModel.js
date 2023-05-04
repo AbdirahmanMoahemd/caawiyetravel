@@ -26,19 +26,6 @@ const userSchema = mongoose.Schema(
     country: {
       type: String,
     },
-    requests: [
-      {
-        project: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Projects",
-        },
-        status: {
-          type:Boolean,
-          required:true,
-          default:false
-        }
-      },
-    ],
     wishlist: [
       {
         project: {

@@ -11,9 +11,39 @@ const requestSchema = mongoose.Schema(
       ref: "Projects",
     },
     status: {
-      type: Boolean,
+      type: Number,
       required: true,
-      default: false,
+      default: 1,
+    },
+    title: {
+      type: String,
+      require: true,
+    },
+    owner: {
+      type: String,
+      require: true,
+    },
+    available: {
+      type: String,
+      require: true,
+    },
+    price: {
+      type: Number,
+      require: true,
+      default:0.0
+    },
+    category: {
+      type: Number,
+      require: true,
+      default:1
+    },
+    image: {
+      type: String,
+      require: true,
+    },
+    description: {
+      type: String,
+      require: true,
     },
   },
   {
