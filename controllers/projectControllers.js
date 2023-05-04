@@ -1,10 +1,9 @@
 import Project from "../models/projectModel.js";
 import expressAsync from "express-async-handler";
-import User from "../models/usersModel.js";
 
 export const getProjects = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().populate('user');
 
     res.status(200).json(projects);
   } catch (error) {
