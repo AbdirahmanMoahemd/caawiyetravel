@@ -7,7 +7,6 @@ export const login = expressAsync(async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email })
-      .populate("requests.project")
       .populate("wishlist.project");
 
     if (user && (await user.matchPassword(password))) {
@@ -116,7 +115,6 @@ export const createBuyerUser = expressAsync(async (req, res) => {
 export const getAllUser = expressAsync(async (req, res) => {
   try {
     const users = await User.find()
-      .populate("requests.project")
       .populate("wishlist.project");
 
     res.status(200).json(users);
@@ -158,7 +156,6 @@ export const deletUser = expressAsync(async (req, res) => {
 
 export const getUserProfileById = async (req, res) => {
   const user = await User.findById(req.params.id)
-    .populate("requests.project")
     .populate("wishlist.project");
   const { token } = req.body;
 
@@ -203,7 +200,6 @@ export const addToRequest = expressAsync(async (req, res) => {
     const { id } = req.body;
     const project = await Project.findById(id);
     let user = await User.findById(req.params.id)
-      .populate("requests.project")
       .populate("wishlist.project");
 
     if (user.requests.length == 0) {
@@ -234,7 +230,6 @@ export const addToWishlist = expressAsync(async (req, res) => {
     const { id } = req.body;
     const project = await Project.findById(id);
     let user = await User.findById(req.params.id)
-      .populate("requests.project")
       .populate("wishlist.project");
 
     if (user.wishlist.length == 0) {
