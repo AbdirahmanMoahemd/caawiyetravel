@@ -195,35 +195,7 @@ export const updateUserRole = expressAsync(async (req, res) => {
   }
 });
 
-export const addToRequest = expressAsync(async (req, res) => {
-  try {
-    const { id } = req.body;
-    const project = await Project.findById(id);
-    let user = await User.findById(req.params.id)
-      .populate("wishlist.project");
 
-    if (user.requests.length == 0) {
-      user.requests.push({ project });
-    } else {
-      let isProjectFound = false;
-      for (let i = 0; i < user.requests.length; i++) {
-        if (user.requests[i].project._id.equals(project._id)) {
-          isProjectFound = true;
-        }
-      }
-
-      if (isProjectFound) {
-        return res.status(400).json({ msg: "Already added" });
-      } else {
-        user.requests.push({ project });
-      }
-    }
-    user = await user.save();
-    res.json(user);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
 
 export const addToWishlist = expressAsync(async (req, res) => {
   try {
