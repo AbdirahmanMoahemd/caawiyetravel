@@ -113,7 +113,15 @@ export const createBuyerUser = expressAsync(async (req, res) => {
 
 export const getAllUser = expressAsync(async (req, res) => {
   try {
-    const users = await User.find().populate("wishlist.project");
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const users = await User.find({...keyword}).populate("wishlist.project");
 
     res.status(200).json(users);
   } catch (error) {
