@@ -47,6 +47,7 @@ export const createRequest = expressAsync(async (req, res) => {
   try {
     const {
       user,
+      username,
       project,
       title,
       owner,
@@ -58,7 +59,7 @@ export const createRequest = expressAsync(async (req, res) => {
     } = req.body;
     const request = await Request.create({
       user,
-      username:user.name,
+      username,
       project,
       title,
       owner,
