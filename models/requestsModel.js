@@ -6,7 +6,7 @@ const requestSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
     },
-    username:{
+    username: {
       type: String,
       require: true,
     },
@@ -34,12 +34,12 @@ const requestSchema = mongoose.Schema(
     price: {
       type: Number,
       require: true,
-      default:0.0
+      default: 0.0,
     },
     category: {
       type: Number,
       require: true,
-      default:1
+      default: 1,
     },
     image: {
       type: String,
@@ -49,7 +49,12 @@ const requestSchema = mongoose.Schema(
       type: String,
       require: true,
     },
+    orderedAt: {
+      type: Number,
+      require: true,
+    },
   },
+
   {
     timestamps: true,
   }

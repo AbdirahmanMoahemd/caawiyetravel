@@ -52,6 +52,10 @@ const projectSchema = mongoose.Schema(
     paidAt: {
       type: Date,
     },
+    createdAt: {
+      type: Number,
+      require: true,
+    },
   },
   {
     timestamps: true,

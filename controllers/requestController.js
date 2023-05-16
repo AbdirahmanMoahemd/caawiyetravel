@@ -68,6 +68,7 @@ export const createRequest = expressAsync(async (req, res) => {
       image,
       category,
       description,
+      orderedAt: new Date().getTime()
     });
     if (request) {
       res.json(request);
