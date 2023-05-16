@@ -41,6 +41,17 @@ const projectSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    orderedAt: {
+      type: Number,
+    },
+    isPaid: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    paidAt: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

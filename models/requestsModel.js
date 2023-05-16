@@ -6,6 +6,10 @@ const requestSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
     },
+    username:{
+      type: String,
+      require: true,
+    },
     project: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Projects",

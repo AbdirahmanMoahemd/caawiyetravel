@@ -6,8 +6,7 @@ import Project from "../models/projectModel.js";
 export const login = expressAsync(async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email })
-      .populate("wishlist.project");
+    const user = await User.findOne({ email }).populate("wishlist.project");
 
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
@@ -114,8 +113,7 @@ export const createBuyerUser = expressAsync(async (req, res) => {
 
 export const getAllUser = expressAsync(async (req, res) => {
   try {
-    const users = await User.find()
-      .populate("wishlist.project");
+    const users = await User.find().populate("wishlist.project");
 
     res.status(200).json(users);
   } catch (error) {
@@ -155,27 +153,32 @@ export const deletUser = expressAsync(async (req, res) => {
 });
 
 export const getUserProfileById = async (req, res) => {
-  const user = await User.findById(req.params.id)
-    .populate("wishlist.project");
-  const { token } = req.body;
+  try {
+    const user = await User.findById(req.params.id).populate(
+      "wishlist.project"
+    );
+    const { token } = req.body;
 
-  if (user) {
-    res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      approved: user.approved,
-      phone: user.phone,
-      address: user.address,
-      country: user.country,
-      city: user.city,
-      token,
-      requests: user.requests,
-      wishlist: user.wishlist,
-    });
-  } else {
-    res.status(404).json({ msg: "User not found" });
+    if (user) {
+      res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        approved: user.approved,
+        phone: user.phone,
+        address: user.address,
+        country: user.country,
+        city: user.city,
+        token,
+        requests: user.requests,
+        wishlist: user.wishlist,
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -191,18 +194,15 @@ export const updateUserRole = expressAsync(async (req, res) => {
 
     res.json(updatedUser);
   } catch (error) {
-    res.status(404).json({ msg: "User not found" });
+    res.status(500).json({ error: error.message });
   }
 });
-
-
 
 export const addToWishlist = expressAsync(async (req, res) => {
   try {
     const { id } = req.body;
     const project = await Project.findById(id);
-    let user = await User.findById(req.params.id)
-      .populate("wishlist.project");
+    let user = await User.findById(req.params.id).populate("wishlist.project");
 
     if (user.wishlist.length == 0) {
       user.wishlist.push({ project });
@@ -215,7 +215,7 @@ export const addToWishlist = expressAsync(async (req, res) => {
       }
 
       if (isProjectFound) {
-        return res.status(400).json({ msg: "Already added" });
+        return res.status(400).json({ message: "Already added" });
       } else {
         user.wishlist.push({ project });
       }
