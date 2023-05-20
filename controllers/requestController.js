@@ -92,6 +92,5 @@ export const updateRequestStatus = expressAsync(async (req, res) => {
     res.json(updatedRequest);
   } catch (error) {
     res.status(500).json({ error: error.message });
-    throw new Error("Request Not Found");
   }
 });

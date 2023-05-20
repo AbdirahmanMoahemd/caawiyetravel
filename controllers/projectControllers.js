@@ -29,9 +29,42 @@ export const getUSAProjects = expressAsync(async (req, res) => {
   }
 });
 
+
+export const getUSAProjectsByAdmin = expressAsync(async (req, res) => {
+  try {
+    const projects = await Project.find({ category: 1 });
+
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 export const getCANADAProjects = expressAsync(async (req, res) => {
   try {
     const projects = await Project.find({ approved: true, category: 2 });
+
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+export const getCANADAProjectsByAdmin = expressAsync(async (req, res) => {
+  try {
+    const projects = await Project.find({ category: 2 });
+
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+export const getUnApprovedProjects = expressAsync(async (req, res) => {
+  try {
+    const projects = await Project.find({ approved: false });
 
     res.status(200).json(projects);
   } catch (error) {

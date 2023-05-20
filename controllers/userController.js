@@ -24,7 +24,7 @@ export const login = expressAsync(async (req, res) => {
         token: generateToken(user._id),
       });
     } else {
-      res.status(400).json({ msg: "Invalid email or password" });
+      res.status(400).json({ message: "Invalid email or password" });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -37,7 +37,7 @@ export const createUser = expressAsync(async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      res.status(404).json({ msg: "User already exists" });
+      res.status(404).json({ message: "User already exists" });
     }
 
     const user = await User.create({
@@ -77,7 +77,7 @@ export const createBuyerUser = expressAsync(async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      res.status(404).json({ msg: "User already exists" });
+      res.status(404).json({ message: "User already exists" });
     }
 
     const user = await User.create({
@@ -138,7 +138,7 @@ export const updateUser = expressAsync(async (req, res) => {
       const updatedUser = await User.findById(id);
       res.status(200).json(updatedUser);
     } else {
-      res.status(404).json({ msg: "User not found" });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -151,9 +151,9 @@ export const deletUser = expressAsync(async (req, res) => {
 
     const user = await User.findByIdAndDelete(id, req.body);
     if (user) {
-      res.status(200).json({ msg: "SucessFully Deleted" });
+      res.status(200).json({ message: "SucessFully Deleted" });
     } else {
-      res.status(404).json({ msg: "User not found" });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
