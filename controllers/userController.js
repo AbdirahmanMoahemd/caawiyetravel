@@ -104,10 +104,10 @@ export const createBuyerUser = expressAsync(async (req, res) => {
         token: generateToken(user._id),
       });
     } else {
-      res.status(500).json({ error: e.message });
+      res.status(400).json({ message: e.message });
     }
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
