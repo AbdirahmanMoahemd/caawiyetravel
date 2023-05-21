@@ -57,21 +57,28 @@ export const createRequest = expressAsync(async (req, res) => {
       category,
       description,
     } = req.body;
-    const request = await Request.create({
-      user,
-      username,
-      project,
-      title,
-      owner,
-      available,
-      price,
-      image,
-      category,
-      description,
-      orderedAt: new Date().getTime()
-    });
-    if (request) {
-      res.json(request);
+
+    const myRequest = await Request.findOne({ project: project });
+
+    if (myRequest) {
+      res.status(404).json({ message: "Already added" });
+    } else {
+      const request = await Request.create({
+        user,
+        username,
+        project,
+        title,
+        owner,
+        available,
+        price,
+        image,
+        category,
+        description,
+        orderedAt: new Date().getTime(),
+      });
+      if (request) {
+        res.json(request);
+      }
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

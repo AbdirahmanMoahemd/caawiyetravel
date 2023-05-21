@@ -12,7 +12,7 @@ const requestSchema = mongoose.Schema(
     },
     project: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Projects",
+      ref: "projects",
     },
     status: {
       type: Number,
