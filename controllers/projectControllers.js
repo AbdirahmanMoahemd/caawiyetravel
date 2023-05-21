@@ -21,7 +21,7 @@ export const getProjects = expressAsync(async (req, res) => {
 
 export const getUSAProjects = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find({ approved: true, category: 1 });
+    const projects = await Project.find({ approved: true, category: 1 }).populate("user");
 
     res.status(200).json(projects);
   } catch (error) {
@@ -32,7 +32,7 @@ export const getUSAProjects = expressAsync(async (req, res) => {
 
 export const getUSAProjectsByAdmin = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find({ category: 1 });
+    const projects = await Project.find({ category: 1 }).populate("user");
 
     res.status(200).json(projects);
   } catch (error) {
@@ -43,7 +43,7 @@ export const getUSAProjectsByAdmin = expressAsync(async (req, res) => {
 
 export const getCANADAProjects = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find({ approved: true, category: 2 });
+    const projects = await Project.find({ approved: true, category: 2 }).populate("user");
 
     res.status(200).json(projects);
   } catch (error) {
@@ -54,7 +54,7 @@ export const getCANADAProjects = expressAsync(async (req, res) => {
 
 export const getCANADAProjectsByAdmin = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find({ category: 2 });
+    const projects = await Project.find({ category: 2 }).populate("user");
 
     res.status(200).json(projects);
   } catch (error) {
@@ -64,7 +64,7 @@ export const getCANADAProjectsByAdmin = expressAsync(async (req, res) => {
 
 export const getUnApprovedProjects = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find({ approved: false });
+    const projects = await Project.find({ approved: false }).populate("user");
 
     res.status(200).json(projects);
   } catch (error) {
@@ -74,7 +74,7 @@ export const getUnApprovedProjects = expressAsync(async (req, res) => {
 
 export const getMyProjects = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find({ user: req.params.id });
+    const projects = await Project.find({ user: req.params.id }).populate("user");
 
     res.status(200).json(projects);
   } catch (error) {
