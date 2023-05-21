@@ -69,8 +69,7 @@ export const createUser = expressAsync(async (req, res) => {
 
 export const createBuyerUser = expressAsync(async (req, res) => {
   try {
-    const { name, email, password, phone, city, country, role } =
-      req.body;
+    const { name, email, password, phone, city, country, role } = req.body;
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -116,7 +115,9 @@ export const getAllUser = expressAsync(async (req, res) => {
           },
         }
       : {};
-    const users = await User.find({...keyword}).populate("wishlist.project").sort({ createdAt: -1 });
+    const users = await User.find({ ...keyword })
+      .populate("wishlist.project")
+      .sort({ createdAt: -1 });
 
     res.status(200).json(users);
   } catch (error) {
@@ -226,5 +227,36 @@ export const addToWishlist = expressAsync(async (req, res) => {
     res.json(user);
   } catch (e) {
     res.status(500).json({ error: e.message });
+  }
+});
+
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+export const updateProfile = expressAsync(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate(
+      "wishlist.project"
+    );
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.phone = req.body.phone || user.phone;
+      user.city = req.body.city || user.city;
+      user.country = req.body.country || user.country;
+
+      const updatedUser = await user.save();
+
+      res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        phone: updatedUser.phone,
+        city: updatedUser.city,
+        country: updatedUser.country,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
 });
