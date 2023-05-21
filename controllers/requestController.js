@@ -101,3 +101,22 @@ export const updateRequestStatus = expressAsync(async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+
+// @desc    Delete a request
+// @route   GET /api/request/:id
+// @access  Private/Admin
+export const deleteRequest = expressAsync(async (req, res) => {
+  try {
+    const request = await Request.findByIdAndDelete(req.params.id);
+
+    if (request) {
+      res.json({
+        message: "Removed Successfully",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
