@@ -58,7 +58,7 @@ export const createRequest = expressAsync(async (req, res) => {
       description,
     } = req.body;
 
-    const myRequest = await Request.findOne({ project: project });
+    const myRequest = await Request.findOne({ project: project , user:user });
 
     if (myRequest) {
       res.status(404).json({ message: "Already added" });
