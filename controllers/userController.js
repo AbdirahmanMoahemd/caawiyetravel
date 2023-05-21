@@ -16,7 +16,6 @@ export const login = expressAsync(async (req, res) => {
         role: user.role,
         approved: user.approved,
         phone: user.phone,
-        address: user.address,
         country: user.country,
         city: user.city,
         requests: user.requests,
@@ -33,7 +32,7 @@ export const login = expressAsync(async (req, res) => {
 
 export const createUser = expressAsync(async (req, res) => {
   try {
-    const { name, email, password, phone, address, city, country } = req.body;
+    const { name, email, password, phone, city, country } = req.body;
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -45,7 +44,6 @@ export const createUser = expressAsync(async (req, res) => {
       email,
       password,
       phone,
-      address,
       city,
       country,
     });
@@ -57,7 +55,6 @@ export const createUser = expressAsync(async (req, res) => {
         role: user.role,
         approved: user.approved,
         phone: user.phone,
-        address: user.address,
         city: user.city,
         country: user.country,
         token: generateToken(user._id),
@@ -72,7 +69,7 @@ export const createUser = expressAsync(async (req, res) => {
 
 export const createBuyerUser = expressAsync(async (req, res) => {
   try {
-    const { name, email, password, phone, address, city, country, role } =
+    const { name, email, password, phone, city, country, role } =
       req.body;
     const userExists = await User.findOne({ email });
 
@@ -85,7 +82,6 @@ export const createBuyerUser = expressAsync(async (req, res) => {
       email,
       password,
       phone,
-      address,
       city,
       country,
       role,
@@ -98,7 +94,6 @@ export const createBuyerUser = expressAsync(async (req, res) => {
         role: user.role,
         approved: user.approved,
         phone: user.phone,
-        address: user.address,
         city: user.city,
         country: user.country,
         token: generateToken(user._id),
@@ -175,7 +170,6 @@ export const getUserProfileById = async (req, res) => {
         role: user.role,
         approved: user.approved,
         phone: user.phone,
-        address: user.address,
         country: user.country,
         city: user.city,
         token,
