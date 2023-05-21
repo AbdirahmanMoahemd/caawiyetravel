@@ -17,6 +17,6 @@ router
   .route("/:id")
   .get(protect, getRequestById)
   .put(protect, admin, updateRequestStatus)
-  .delete(protect, admin, deleteRequest);
+  .delete(protect, deleteRequest);
 
 export default router;
