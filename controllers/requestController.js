@@ -13,7 +13,7 @@ export const getRequests = expressAsync(async (req, res) => {
       : {};
     const requests = await Request.find({ ...keyword })
       .populate("project")
-      .populate("user");
+      .populate("user").sort({ createdAt: -1 });
 
     res.status(200).json(requests);
   } catch (error) {
@@ -35,7 +35,7 @@ export const getRequestById = expressAsync(async (req, res) => {
 
 export const getMyRequests = expressAsync(async (req, res) => {
   try {
-    const request = await Request.find({ user: req.params.id });
+    const request = await Request.find({ user: req.params.id }).sort({ createdAt: -1 });
 
     res.status(200).json(request);
   } catch (error) {
