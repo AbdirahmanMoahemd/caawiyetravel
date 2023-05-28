@@ -260,3 +260,30 @@ export const updateProfile = expressAsync(async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 });
+
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+export const updatePassword = expressAsync(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate(
+      "wishlist.project"
+    );
+    if (user) {
+      user.password = req.body.password || user.password;
+
+      const updatedUser = await user.save();
+
+      res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        phone: updatedUser.phone,
+        city: updatedUser.city,
+        country: updatedUser.country,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
