@@ -1,5 +1,7 @@
 import Request from "../models/requestsModel.js";
 import expressAsync from "express-async-handler";
+import nodemailer from "nodemailer";
+import Mailgen from "mailgen";
 
 export const getRequests = expressAsync(async (req, res) => {
   try {
