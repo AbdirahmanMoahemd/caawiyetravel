@@ -107,9 +107,9 @@ export const createRequest = expressAsync(async (req, res) => {
             table: {
               data: [
                 {
-                  oderId: order._id,
-                  name: req.user.name,
-                  phone: req.user.phone,
+                  oderId: request._id,
+                  name: user.name,
+                  phone: user.phone,
                 },
               ],
             },
