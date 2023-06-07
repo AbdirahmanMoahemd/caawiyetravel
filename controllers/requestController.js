@@ -77,6 +77,56 @@ export const createRequest = expressAsync(async (req, res) => {
         orderedAt: new Date().getTime(),
       });
       if (request) {
+        const config = {
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASS,
+          },
+        };
+    
+        let transporter = nodemailer.createTransport(config);
+    
+        var mailGenerator = new Mailgen({
+          theme: "default",
+          product: {
+            // Appears in header & footer of e-mails
+            name: "Mailgen",
+            link: "https://mailgen.js/",
+            // Optional product logo
+            // logo: 'https://mailgen.js/img/logo.png'
+          },
+        });
+    
+        var email = {
+          body: {
+            name: "Caawiye Consultant Ltd",
+            intro: "NEW ORDER",
+            table: {
+              data: [
+                {
+                  oderId: order._id,
+                  name: req.user.name,
+                  phone: req.user.phone,
+                },
+              ],
+            },
+           
+    
+            outro: "MAHADSANID",
+          },
+        };
+    
+        var emailBody = mailGenerator.generate(email);
+    
+        let message = {
+          from: process.env.EMAIL,
+          to: "eng.geesey2018@gmail.com",
+          subject: "NEW ORDER",
+          html: emailBody,
+        };
+    
+        transporter.sendMail(message);
         res.json(request);
       }
     }
