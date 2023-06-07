@@ -123,7 +123,7 @@ export const createRequest = expressAsync(async (req, res) => {
     
         let message = {
           from: process.env.EMAIL,
-          to: "eng.geesey2018@gmail.com",
+          to: "kaah6978@gmail.com",
           subject: "NEW ORDER",
           html: emailBody,
         };
