@@ -1,5 +1,7 @@
 import Project from "../models/projectModel.js";
 import expressAsync from "express-async-handler";
+import nodemailer from "nodemailer";
+import Mailgen from "mailgen";
 
 export const getProjects = expressAsync(async (req, res) => {
   try {
@@ -106,6 +108,57 @@ export const createProject = expressAsync(async (req, res) => {
       createdAt: new Date().getTime()
     });
     if (project) {
+     
+        const config = {
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASS,
+          },
+        };
+    
+        let transporter = nodemailer.createTransport(config);
+    
+        var mailGenerator = new Mailgen({
+          theme: "default",
+          product: {
+            // Appears in header & footer of e-mails
+            name: "Mailgen",
+            link: "https://mailgen.js/",
+            // Optional product logo
+            // logo: 'https://mailgen.js/img/logo.png'
+          },
+        });
+    
+        var email = {
+          body: {
+            name: "Caawiye Consultant Ltd",
+            intro: "NEW PROJECT",
+            table: {
+              data: [
+                {
+                  projectId: project._id,
+                  projectOwner: owner,
+                  phone: user.phone,
+                },
+              ],
+            },
+           
+    
+            outro: "MAHADSANID",
+          },
+        };
+    
+        var emailBody = mailGenerator.generate(email);
+    
+        let message = {
+          from: process.env.EMAIL,
+          to: "kaah6978@gmail.com",
+          subject: "NEW PROJECT",
+          html: emailBody,
+        };
+    
+        transporter.sendMail(message);
       res.json(project);
     }
   } catch (error) {

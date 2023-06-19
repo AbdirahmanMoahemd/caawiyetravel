@@ -23,6 +23,11 @@ const projectSchema = mongoose.Schema(
       require: true,
       default:0.0
     },
+    chargedprice: {
+      type: Number,
+      require: true,
+      default:0.0
+    },
     category: {
       type: Number,
       require: true,

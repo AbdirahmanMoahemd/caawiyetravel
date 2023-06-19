@@ -5,13 +5,14 @@ import {
   deleteRequest,
   getMyRequests,
   getRequestById,
+  
   getRequests,
   updateRequestStatus,
 } from "../controllers/requestController.js";
 
 const router = express.Router();
 
-router.route("/").get(protect, admin, getRequests).post(protect, createRequest);
+router.route("/").get(protect, admin, getRequests).post(createRequest);
 router.route("/myrequests/:id").get(protect, getMyRequests);
 router
   .route("/:id")

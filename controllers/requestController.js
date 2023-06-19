@@ -46,7 +46,6 @@ export const getMyRequests = expressAsync(async (req, res) => {
 });
 
 export const createRequest = expressAsync(async (req, res) => {
-  try {
     const {
       user,
       username,
@@ -132,9 +131,7 @@ export const createRequest = expressAsync(async (req, res) => {
         res.json(request);
       }
     }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+ 
 });
 
 export const updateRequestStatus = expressAsync(async (req, res) => {
