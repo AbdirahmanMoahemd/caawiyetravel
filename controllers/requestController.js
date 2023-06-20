@@ -101,7 +101,7 @@ export const createRequest = expressAsync(async (req, res) => {
     
         var email = {
           body: {
-            name: "Caawiye Consultant Ltd",
+            title:"Caawiye Consultant Ltd",
             intro: "NEW ORDER",
             table: {
               data: [

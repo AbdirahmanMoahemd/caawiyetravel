@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 import connectDB from './config/db.js'
 import Project from './models/projectModel.js'
+import Request from './models/requestsModel.js'
 
 
 
@@ -12,8 +13,8 @@ connectDB()
 
 const importData = async () => {
     try {
-        await Project.deleteMany()
-        // await Product.deleteMany()
+        // await Project.deleteMany()
+        await Request.deleteMany()
         // await User.deleteMany()
         // await Slide.deleteMany()
 

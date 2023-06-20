@@ -84,6 +84,66 @@ export const getMyProjects = expressAsync(async (req, res) => {
   }
 });
 
+
+export const chargeToPay = expressAsync(async (req, res) => {
+  
+    const { price, gmail } = req.body
+    const project = await Project.findById(req.params.id).populate("user");
+    if (project) {
+      project.chargedprice = price
+      const updatedProject = project.save();
+      const config = {
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASS,
+        },
+      };
+  
+      let transporter = nodemailer.createTransport(config);
+  
+      var mailGenerator = new Mailgen({
+        theme: "default",
+        product: {
+          // Appears in header & footer of e-mails
+          name: "Mailgen",
+          link: "https://mailgen.js/",
+          // Optional product logo
+          // logo: 'https://mailgen.js/img/logo.png'
+        },
+      });
+  
+      var email = {
+        body: {
+          Title: "From Caawiye Consultant Ltd",
+          name: `Dear ${updatedProject}`,
+          intro: `We\'re very excited to have you!\nPlease pay ${price} to approve your project.`,
+          
+
+         
+  
+          outro: "THANKS",
+        },
+      };
+  
+      var emailBody = mailGenerator.generate(email);
+  
+      let message = {
+        from: process.env.EMAIL,
+        to: gmail,
+        subject: "PAYMENT",
+        html: emailBody,
+      };
+  
+      transporter.sendMail(message);
+
+      res.json(updatedProject);
+    }
+
+ 
+});
+
+
 export const createProject = expressAsync(async (req, res) => {
   try {
     const {
