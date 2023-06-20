@@ -28,6 +28,11 @@ const projectSchema = mongoose.Schema(
       require: true,
       default:0.0
     },
+    isCharged: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     category: {
       type: Number,
       require: true,

@@ -91,6 +91,7 @@ export const chargeToPay = expressAsync(async (req, res) => {
     const project = await Project.findById(req.params.id).populate("user");
     if (project) {
       project.chargedprice = price
+      project.isCharged = true
       const updatedProject = project.save();
       const config = {
         service: "gmail",
