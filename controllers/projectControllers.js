@@ -23,7 +23,7 @@ export const getProjects = expressAsync(async (req, res) => {
 
 export const getUSAProjects = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find({ approved: true, category: 1 }).populate("user").sort({ createdAt: -1 });
+    const projects = await Project.find({ approved: true,isPaid:true, category: 1 }).populate("user").sort({ createdAt: -1 });
 
     res.status(200).json(projects);
   } catch (error) {
@@ -45,7 +45,7 @@ export const getUSAProjectsByAdmin = expressAsync(async (req, res) => {
 
 export const getCANADAProjects = expressAsync(async (req, res) => {
   try {
-    const projects = await Project.find({ approved: true, category: 2 }).populate("user").sort({ createdAt: -1 });
+    const projects = await Project.find({ approved: true,isPaid:true, category: 2 }).populate("user").sort({ createdAt: -1 });
 
     res.status(200).json(projects);
   } catch (error) {
