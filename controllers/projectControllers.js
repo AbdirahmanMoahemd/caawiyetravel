@@ -259,6 +259,7 @@ export const updateProjectApproved = expressAsync(async (req, res) => {
     const project = await Project.findById(req.params.id);
     if (project) {
       project.approved = approved;
+      project.isPaid = true;
     }
 
     const updatedProject = project.save();
