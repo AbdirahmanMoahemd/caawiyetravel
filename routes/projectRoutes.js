@@ -16,6 +16,6 @@ router.route('/canada/list/admin').get(protect,admin, getCANADAProjectsByAdmin)
 router.route('/update/:id').put(protect, admin, updateProjectApproved)
 router.route('/:id').put(protect, updateProject).delete(protect, deleteProject)
 router.route('/myprojects/:id').get(protect, getMyProjects)
-router.route('/projects/charge/:id').get(protect,admin, chargeToPay)
+router.route('/projects/charge/:id').put(protect,admin, chargeToPay)
 
 export default router
