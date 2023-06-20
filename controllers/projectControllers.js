@@ -116,9 +116,9 @@ export const chargeToPay = expressAsync(async (req, res) => {
   
       var email = {
         body: {
-          Title: "From Caawiye Consultant Ltd",
-          name: `Dear ${updatedProject}`,
-          intro: `We\'re very excited to have you!\nPlease pay ${price} to approve your project.`,
+          title: "From Caawiye Consultant Ltd",
+          name: `Dear ${updatedProject.user.name}`,
+          intro: `We\'re very excited to have you!\nPlease pay \$${price} to approve your project.`,
           
 
          
