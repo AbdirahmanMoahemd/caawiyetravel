@@ -254,12 +254,12 @@ export const updateProject = expressAsync(async (req, res) => {
 
 export const updateProjectApproved = expressAsync(async (req, res) => {
   try {
-    const { approved } = req.body;
+    const { approved, isPaid } = req.body;
 
     const project = await Project.findById(req.params.id);
     if (project) {
       project.approved = approved;
-      project.isPaid = true;
+      project.isPaid = isPaid;
     }
 
     const updatedProject = project.save();
