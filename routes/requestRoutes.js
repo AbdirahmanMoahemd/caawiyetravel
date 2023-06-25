@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.route("/").get(protect, admin, getRequests).post(createRequest);
 router.route("/myrequests/:id").get(protect, getMyRequests);
-router.route("/updateRequest/:id").get(protect, updateRequestToPaid);
+router.route("/updateRequest/:id").put(protect, updateRequestToPaid);
 router
   .route("/:id")
   .get(protect, getRequestById)
