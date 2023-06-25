@@ -152,6 +152,24 @@ export const updateRequestStatus = expressAsync(async (req, res) => {
 });
 
 
+export const updateRequestToPaid = expressAsync(async (req, res) => {
+  try {
+    const { isPaid } = req.body;
+
+    const request = await Request.findById(req.params.id);
+    if (request) {
+      request.isPaid = isPaid;
+    }
+
+    const updatedRequest = request.save();
+
+    res.json(updatedRequest);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 
 // @desc    Delete a request
 // @route   GET /api/request/:id

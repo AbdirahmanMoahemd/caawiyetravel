@@ -53,6 +53,11 @@ const requestSchema = mongoose.Schema(
       type: Number,
       require: true,
     },
+    isPaid: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
 
   {
