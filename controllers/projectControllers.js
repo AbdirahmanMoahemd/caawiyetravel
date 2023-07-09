@@ -275,13 +275,66 @@ export const updateProjectToPaid = expressAsync(async (req, res) => {
   try {
    
 
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id).populate('user');
     if (project) {
      
       project.isPaid = true;
     }
 
     const updatedProject = project.save();
+    if (updatedProject) {
+      const config = {
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASS,
+        },
+      };
+  
+      let transporter = nodemailer.createTransport(config);
+  
+      var mailGenerator = new Mailgen({
+        theme: "default",
+        product: {
+          // Appears in header & footer of e-mails
+          name: "Mailgen",
+          link: "https://mailgen.js/",
+          // Optional product logo
+          // logo: 'https://mailgen.js/img/logo.png'
+        },
+      });
+  
+      var email = {
+        body: {
+          name: "Caawiye Consultant Ltd",
+          intro: "Payment For Project Approvel",
+          table: {
+            data: [
+              {
+                projectOwner: updatedProject.owner,
+                title: updatedProject.title,
+                paidAmount: updatedProject.chargedprice
+              },
+            ],
+          },
+         
+  
+          outro: "MAHADSANID",
+        },
+      };
+  
+      var emailBody = mailGenerator.generate(email);
+  
+      let message = {
+        from: process.env.EMAIL,
+        to: "Cacoltd2021@gmail.com",
+        subject: "Payment For Project Approvel",
+        html: emailBody,
+      };
+  
+      transporter.sendMail(message);
+      
+    }
 
     res.json(updatedProject);
   } catch (error) {
