@@ -311,11 +311,12 @@ export const updateProjectToPaid = expressAsync(async (req, res) => {
           table: {
             data: [
               {
-                projectOwner: updatedProject.owner,
-                title: updatedProject.title,
-                paidAmount: updatedProject.chargedprice
+                projectOwner: project.owner,
+                title: project.title,
+                paidAmount: project.chargedprice
               },
             ],
+            b
           },
          
   
