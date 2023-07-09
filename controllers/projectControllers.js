@@ -270,6 +270,25 @@ export const updateProjectApproved = expressAsync(async (req, res) => {
   }
 });
 
+
+export const updateProjectToPaid = expressAsync(async (req, res) => {
+  try {
+   
+
+    const project = await Project.findById(req.params.id);
+    if (project) {
+     
+      project.isPaid = true;
+    }
+
+    const updatedProject = project.save();
+
+    res.json(updatedProject);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // @desc    Delete a product
 // @route   GET /api/product/:id
 // @access  Private/Admin
