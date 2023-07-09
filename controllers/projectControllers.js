@@ -316,7 +316,7 @@ export const updateProjectToPaid = expressAsync(async (req, res) => {
                 paidAmount: project.chargedprice
               },
             ],
-            b
+            
           },
          
   
