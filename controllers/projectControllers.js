@@ -166,7 +166,7 @@ export const createProject = expressAsync(async (req, res) => {
       category,
       image,
       description,
-      createdAt: new Date().getTime()
+      
     });
     if (project) {
      
