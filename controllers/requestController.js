@@ -110,7 +110,7 @@ export const createRequest = expressAsync(async (req, res) => {
                   name: username,
                   phone: user.phone,
                   owner:owner,
-                  ordered_Date:orderedAt 
+                  ordered_Date:new Date().getTime() 
                 },
               ],
             },
