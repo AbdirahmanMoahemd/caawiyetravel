@@ -59,7 +59,7 @@ export const createRequest = expressAsync(async (req, res) => {
       description,
     } = req.body;
 
-    const myRequest = await Request.findOne({ project: project , user:user });
+    const myRequest = await Request.findOne({ project: project , user:user }).populate('user');
 
     if (myRequest) {
       res.status(404).json({ message: "Already added" });
@@ -67,6 +67,7 @@ export const createRequest = expressAsync(async (req, res) => {
       const request = await Request.create({
         user,
         username,
+        phone,
         project,
         title,
         owner,
@@ -98,7 +99,7 @@ export const createRequest = expressAsync(async (req, res) => {
             // logo: 'https://mailgen.js/img/logo.png'
           },
         });
-    
+        
         var email = {
           body: {
             title:"Caawiye Consultant Ltd",
@@ -108,9 +109,9 @@ export const createRequest = expressAsync(async (req, res) => {
                 {
                   oderId: request._id,
                   name: username,
-                  phone: user.phone,
+                  phone: phone,
                   owner:owner,
-                  ordered_Date:new Date().getTime() 
+                  ordered_Date: moment(new Date().getTime()).toString() 
                 },
               ],
             },
