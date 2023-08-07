@@ -121,7 +121,7 @@ export const createRequest = expressAsync(async (req, res) => {
                 name: username,
                 phone: phone,
                 owner: owner,
-                ordered_Date: start,
+                ordered_Date: startsubstring(0, 10),
               },
             ],
           },
@@ -134,7 +134,7 @@ export const createRequest = expressAsync(async (req, res) => {
 
       let message = {
         from: process.env.EMAIL,
-        to: "Cacoltd2021@gmail.com",
+        to: "kaah6978@gmail.com",
         subject: "NEW ORDER",
         html: emailBody,
       };
