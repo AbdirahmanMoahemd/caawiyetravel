@@ -52,6 +52,7 @@ export const createRequest = expressAsync(async (req, res) => {
   const {
     user,
     username,
+    phone,
     project,
     title,
     owner,
@@ -73,7 +74,6 @@ export const createRequest = expressAsync(async (req, res) => {
     const request = await Request.create({
       user,
       username,
-      phone,
       project,
       title,
       owner,
