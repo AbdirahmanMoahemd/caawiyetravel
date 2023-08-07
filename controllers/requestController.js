@@ -2,6 +2,7 @@ import Request from "../models/requestsModel.js";
 import expressAsync from "express-async-handler";
 import nodemailer from "nodemailer";
 import Mailgen from "mailgen";
+import moment from 'moment'
 
 export const getRequests = expressAsync(async (req, res) => {
   try {
@@ -13,6 +14,8 @@ export const getRequests = expressAsync(async (req, res) => {
           },
         }
       : {};
+    
+
     const requests = await Request.find({ ...keyword })
       .populate("project")
       .populate("user")
@@ -106,9 +109,8 @@ export const createRequest = expressAsync(async (req, res) => {
         },
       });
 
-      var start = new Date(new Date());
-      start.setDate(start.getDate());
-      start.toDateString();
+      var start = new Date().getTime();
+     
 
       var email = {
         body: {
@@ -121,7 +123,7 @@ export const createRequest = expressAsync(async (req, res) => {
                 name: username,
                 phone: phone,
                 owner: owner,
-                ordered_Date: start.substring(0,10),
+                ordered_Date: moment(start).toString().substring(0, 15),
               },
             ],
           },
