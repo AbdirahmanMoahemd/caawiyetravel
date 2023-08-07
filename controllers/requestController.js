@@ -15,7 +15,6 @@ export const getRequests = expressAsync(async (req, res) => {
         }
       : {};
     
-
     const requests = await Request.find({ ...keyword })
       .populate("project")
       .populate("user")
@@ -123,7 +122,7 @@ export const createRequest = expressAsync(async (req, res) => {
                 name: username,
                 phone: phone,
                 owner: owner,
-                ordered_Date: moment(start).toString().substring(0, 15),
+                ordered_Date: moment(start).toString().substring(0, 28),
               },
             ],
           },

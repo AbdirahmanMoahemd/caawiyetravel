@@ -13,7 +13,7 @@ import {
 
 const router = express.Router();
 
-router.route("/").get(protect, admin, getRequests).post(createRequest);
+router.route("/").get(getRequests).post(createRequest);
 router.route("/myrequests/:id").get(protect, getMyRequests);
 router.route("/updateRequest/:id").put(protect, updateRequestToPaid);
 router
