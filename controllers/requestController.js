@@ -107,8 +107,10 @@ export const createRequest = expressAsync(async (req, res) => {
               data: [
                 {
                   oderId: request._id,
-                  name: user.name,
+                  name: username,
                   phone: user.phone,
+                  owner:owner,
+                  ordered_Date:orderedAt 
                 },
               ],
             },
