@@ -121,7 +121,7 @@ export const createRequest = expressAsync(async (req, res) => {
                 name: username,
                 phone: phone,
                 owner: owner,
-                ordered_Date: start.substr(0, 10),
+                ordered_Date: start,
               },
             ],
           },
