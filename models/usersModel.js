@@ -24,6 +24,7 @@ const userSchema = mongoose.Schema(
     },
     otp: {
       type: Number,
+      default: 1,
     },
     phone: {
       type: String,

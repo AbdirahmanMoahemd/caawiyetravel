@@ -3,7 +3,7 @@ import User from "../models/usersModel.js";
 import generateToken from "../utils/generateToken.js";
 import Project from "../models/projectModel.js";
 import nodemailer from'nodemailer';
-
+import randomstring from'randomstring';
 
 export const login = expressAsync(async (req, res) => {
   try {
@@ -16,7 +16,9 @@ export const login = expressAsync(async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        otp: user.otp,
         approved: user.approved,
+        isVerified: user.isVerified,
         phone: user.phone,
         country: user.country,
         city: user.city,
@@ -82,7 +84,7 @@ export const verifyOtp = expressAsync((req, res) => {
 
 export const createUser = expressAsync(async (req, res) => {
   try {
-    const { name, email, password, phone, city, country,otp } = req.body;
+    const { name, email, password, phone, city, country } = req.body;
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -96,7 +98,6 @@ export const createUser = expressAsync(async (req, res) => {
       phone,
       city,
       country,
-      otp
     });
     if (user) {
       res.json({
@@ -106,6 +107,7 @@ export const createUser = expressAsync(async (req, res) => {
         role: user.role,
         otp: user.otp,
         approved: user.approved,
+        isVerified: user.isVerified,
         phone: user.phone,
         city: user.city,
         country: user.country,
