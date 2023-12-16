@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema(
       require:true,
       default:false
     },
+    otp: {
+      type: Number,
+    },
     phone: {
       type: String,
     },
