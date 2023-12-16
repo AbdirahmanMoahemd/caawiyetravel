@@ -74,8 +74,8 @@ function generateOtp() {
 
 export const verifyOtp = expressAsync((req, res) => {
   // app.post("/verify-otp", (req, res) => {
-  const { otp } = req.body;
-  if (otp === req.user.otp) {
+  const { otp, vrotp } = req.body;
+  if (otp === vrotp) {
     res.status(200).send("OTP verification successful");
   } else {
     res.status(400).send("Invalid OTP");
