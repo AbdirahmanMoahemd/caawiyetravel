@@ -2,6 +2,8 @@ import expressAsync from "express-async-handler";
 import User from "../models/usersModel.js";
 import generateToken from "../utils/generateToken.js";
 import Project from "../models/projectModel.js";
+import nodemailer from'nodemailer';
+
 
 export const login = expressAsync(async (req, res) => {
   try {
@@ -27,6 +29,54 @@ export const login = expressAsync(async (req, res) => {
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
+  }
+});
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASS,
+  },
+});
+
+export const sendOtp = expressAsync((req, res) => {
+  // app.post('/send-otp', (req, res) => {
+  const { email } = req.body;
+  const otp = generateOtp();
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: email,
+    subject: "OTP Verification",
+    text: `Your OTP is: ${otp}`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+      res.status(500).send("Failed to send OTP");
+    } else {
+      console.log("Email sent:", info.response);
+      res.status(200).send("OTP sent successfully");
+    }
+  });
+});
+
+function generateOtp() {
+  return randomstring.generate({
+    length: 6,
+    charset: "numeric",
+  });
+}
+
+export const verifyOtp = expressAsync((req, res) => {
+  // app.post("/verify-otp", (req, res) => {
+  const { otp } = req.body;
+  if (otp === req.user.otp) {
+    res.status(200).send("OTP verification successful");
+  } else {
+    res.status(400).send("Invalid OTP");
   }
 });
 
