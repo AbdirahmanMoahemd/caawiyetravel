@@ -60,7 +60,7 @@ export const sendOtp = expressAsync((req, res) => {
       res.status(500).send("Failed to send OTP");
     } else {
       console.log("Email sent:", info.response);
-      res.status(200).send("OTP sent successfully");
+      res.status(200).send({message:"OTP sent successfully", otp:otp});
     }
   });
 });
