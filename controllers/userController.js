@@ -239,9 +239,7 @@ export const deletUser = expressAsync(async (req, res) => {
 
 export const getUserProfileById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate(
-      "wishlist.project"
-    );
+    const user = await User.findById(req.params.id)
     const { token } = req.body;
 
     if (user) {
@@ -288,9 +286,7 @@ export const updateUserRole = expressAsync(async (req, res) => {
 // @access  Private
 export const updateProfile = expressAsync(async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate(
-      "wishlist.project"
-    );
+    const user = await User.findById(req.params.id)
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
@@ -319,9 +315,7 @@ export const updateProfile = expressAsync(async (req, res) => {
 // @access  Private
 export const updatePassword = expressAsync(async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate(
-      "wishlist.project"
-    );
+    const user = await User.findById(req.params.id)
     if (user) {
       user.password = req.body.password || user.password;
 
