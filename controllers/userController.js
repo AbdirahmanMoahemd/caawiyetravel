@@ -2,8 +2,8 @@ import expressAsync from "express-async-handler";
 import User from "../models/usersModel.js";
 import generateToken from "../utils/generateToken.js";
 import Project from "../models/projectModel.js";
-import nodemailer from'nodemailer';
-import randomstring from'randomstring';
+import nodemailer from "nodemailer";
+import randomstring from "randomstring";
 
 export const login = expressAsync(async (req, res) => {
   try {
@@ -60,7 +60,7 @@ export const sendOtp = expressAsync((req, res) => {
       res.status(500).send("Failed to send OTP");
     } else {
       console.log("Email sent:", info.response);
-      res.status(200).send({message:"OTP sent successfully", otp:otp});
+      res.status(200).send({ message: "OTP sent successfully", otp: otp });
     }
   });
 });
@@ -72,7 +72,7 @@ function generateOtp() {
   });
 }
 
-export const verifyOtp = expressAsync(async(req, res) => {
+export const verifyOtp = expressAsync(async (req, res) => {
   // app.post("/verify-otp", (req, res) => {
   const { otp, vrotp } = req.body;
   if (otp === vrotp) {
@@ -93,7 +93,21 @@ export const updateOtpAndVerify = expressAsync(async (req, res) => {
 
     const updatedUser = user.save();
 
-    res.status(200).json(updatedUser);
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      otp: updatedUser.otp,
+      approved: updatedUser.approved,
+      isVerified: updatedUser.isVerified,
+      phone: updatedUser.phone,
+      country: updatedUser.country,
+      city: updatedUser.city,
+      requests: updatedUser.requests,
+      wishlist: updatedUser.wishlist,
+      token: updatedUser.token,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
