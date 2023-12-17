@@ -93,7 +93,7 @@ export const updateOtpAndVerify = expressAsync(async (req, res) => {
 
     const updatedUser = user.save();
 
-    res.json(updatedUser);
+    res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
