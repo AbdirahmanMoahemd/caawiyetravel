@@ -197,7 +197,6 @@ export const getAllUser = expressAsync(async (req, res) => {
         }
       : {};
     const users = await User.find({ ...keyword })
-      .populate("wishlist.project")
       .sort({ createdAt: -1 });
 
     res.status(200).json(users);

@@ -200,7 +200,6 @@ export const createProject = expressAsync(async (req, res) => {
                 {
                   projectId: project._id,
                   projectOwner: owner,
-                  phone: user.phone,
                 },
               ],
             },
