@@ -8,7 +8,7 @@ import randomstring from "randomstring";
 export const login = expressAsync(async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }).populate("wishlist.project");
+    const user = await User.findOne({ email })
 
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
@@ -22,8 +22,6 @@ export const login = expressAsync(async (req, res) => {
         phone: user.phone,
         country: user.country,
         city: user.city,
-        requests: user.requests,
-        wishlist: user.wishlist,
         token: generateToken(user._id),
       });
     } else {
@@ -104,8 +102,6 @@ export const updateOtpAndVerify = expressAsync(async (req, res) => {
       phone: updatedUser.phone,
       country: updatedUser.country,
       city: updatedUser.city,
-      requests: updatedUser.requests,
-      wishlist: updatedUser.wishlist,
       token: updatedUser.token,
     });
   } catch (error) {
@@ -254,13 +250,13 @@ export const getUserProfileById = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        otp: user.otp,
         approved: user.approved,
+        isVerified: user.isVerified,
         phone: user.phone,
         country: user.country,
         city: user.city,
         token,
-        requests: user.requests,
-        wishlist: user.wishlist,
       });
     } else {
       res.status(404).json({ message: "User not found" });
@@ -286,34 +282,6 @@ export const updateUserRole = expressAsync(async (req, res) => {
   }
 });
 
-export const addToWishlist = expressAsync(async (req, res) => {
-  try {
-    const { id } = req.body;
-    const project = await Project.findById(id);
-    let user = await User.findById(req.params.id).populate("wishlist.project");
-
-    if (user.wishlist.length == 0) {
-      user.wishlist.push({ project });
-    } else {
-      let isProjectFound = false;
-      for (let i = 0; i < user.wishlist.length; i++) {
-        if (user.wishlist[i].project._id.equals(project._id)) {
-          isProjectFound = true;
-        }
-      }
-
-      if (isProjectFound) {
-        return res.status(400).json({ message: "Already added" });
-      } else {
-        user.wishlist.push({ project });
-      }
-    }
-    user = await user.save();
-    res.json(user);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
 
 // @desc    Update user profile
 // @route   PUT /api/users/profile

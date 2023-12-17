@@ -35,14 +35,6 @@ const userSchema = mongoose.Schema(
     country: {
       type: String,
     },
-    wishlist: [
-      {
-        project: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Projects",
-        },
-      },
-    ],
   },
   {
     timestamps: true,
