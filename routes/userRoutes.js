@@ -23,7 +23,7 @@ router.route("/").get(protect, admin, getAllUser).post(createUser);
 router.route("/register").post(createBuyerUser);
 router.route("/send-otp").post(sendOtp);
 router.route("/verify-otp").post(protect, verifyOtp);
-router.route("/update/otp/:id").post(protect, updateOtpAndVerify)
+router.route("/update/otp/:id").put(protect, updateOtpAndVerify)
 router.route("/:id").put(updateUser).delete(protect, admin, deletUser);
 router.route("/login").post(login);
 router.route("/profile/:id").post(getUserProfileById);
