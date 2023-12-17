@@ -72,13 +72,30 @@ function generateOtp() {
   });
 }
 
-export const verifyOtp = expressAsync((req, res) => {
+export const verifyOtp = expressAsync(async(req, res) => {
   // app.post("/verify-otp", (req, res) => {
   const { otp, vrotp } = req.body;
   if (otp === vrotp) {
     res.status(200).send("OTP verification successful");
   } else {
     res.status(400).send("Invalid OTP");
+  }
+});
+
+export const updateOtpAndVerify = expressAsync(async (req, res) => {
+  try {
+    const { otp, isVerified } = req.body;
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.otp = otp;
+      user.isVerified = isVerified;
+    }
+
+    const updatedUser = user.save();
+
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
