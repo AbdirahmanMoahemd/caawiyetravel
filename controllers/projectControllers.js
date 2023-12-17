@@ -138,7 +138,7 @@ export const chargeToPay = expressAsync(async (req, res) => {
   
       transporter.sendMail(message);
 
-      res.json(updatedProject);
+      res.status(200).json(updatedProject);
     }
 
  
@@ -220,7 +220,7 @@ export const createProject = expressAsync(async (req, res) => {
         };
     
         transporter.sendMail(message);
-      res.json(project);
+      res.status(201).json(project);
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -243,7 +243,7 @@ export const updateProject = expressAsync(async (req, res) => {
       project.description = description;
       const updatedProject = project.save();
 
-      res.json(updatedProject);
+      res.status(200).json(updatedProject);
     } else {
       res.status(404).json({ message: "Project not found" });
     }
@@ -264,7 +264,7 @@ export const updateProjectApproved = expressAsync(async (req, res) => {
 
     const updatedProject = project.save();
 
-    res.json(updatedProject);
+    res.status(200).json(updatedProject);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -337,7 +337,7 @@ export const updateProjectToPaid = expressAsync(async (req, res) => {
       
     }
 
-    res.json(updatedProject);
+    res.status(200).json(updatedProject);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -351,7 +351,7 @@ export const deleteProject = expressAsync(async (req, res) => {
     const project = await Project.findByIdAndDelete(req.params.id);
 
     if (project) {
-      res.json({
+      res.status(200).json({
         message: "project removed",
       });
     }

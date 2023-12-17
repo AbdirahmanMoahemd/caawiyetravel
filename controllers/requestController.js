@@ -141,7 +141,7 @@ export const createRequest = expressAsync(async (req, res) => {
       };
 
       transporter.sendMail(message);
-      res.json(request);
+      res.status(201).json(request);
     }
   }
 });
@@ -157,7 +157,7 @@ export const updateRequestStatus = expressAsync(async (req, res) => {
 
     const updatedRequest = request.save();
 
-    res.json(updatedRequest);
+    res.status(200).json(updatedRequest);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -174,7 +174,7 @@ export const updateRequestToPaid = expressAsync(async (req, res) => {
 
     const updatedRequest = request.save();
 
-    res.json(updatedRequest);
+    res.status(200).json(updatedRequest);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -188,7 +188,7 @@ export const deleteRequest = expressAsync(async (req, res) => {
     const request = await Request.findByIdAndDelete(req.params.id);
 
     if (request) {
-      res.json({
+      res.status(200).json({
         message: "Removed Successfully",
       });
     }
