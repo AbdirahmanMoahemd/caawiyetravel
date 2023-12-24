@@ -27,6 +27,10 @@ const requestSchema = mongoose.Schema(
       type: String,
       require: true,
     },
+    ownerPhone: {
+      type: Number,
+      require: true,
+    },
     available: {
       type: String,
       require: true,
