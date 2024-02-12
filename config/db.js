@@ -8,7 +8,7 @@ const connectDB = async () => {
       process.env.MONG_URL
     );
 
-    console.log(`MongpDB Connected ${conn.connection.host}`.cyan.underline);
+    console.log(`Connected to database ${conn.connection.name}`.cyan.underline);
   } catch (error) {
     console.log(error);
     process.exit(1)

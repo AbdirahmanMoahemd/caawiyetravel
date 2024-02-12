@@ -8,7 +8,7 @@ import randomstring from "randomstring";
 export const login = expressAsync(async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
@@ -39,6 +39,24 @@ const transporter = nodemailer.createTransport({
     pass: process.env.PASS,
   },
 });
+
+
+export const deletMyAccount = expressAsync(async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      res.status(200).json({message: 'Yes'})
+    }else{
+      res.status(400).json({ message: "this email not exists" });
+    }
+
+  }
+  catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+
+})
 
 export const sendOtp = expressAsync((req, res) => {
   // app.post('/send-otp', (req, res) => {
@@ -196,8 +214,7 @@ export const getAllUser = expressAsync(async (req, res) => {
           },
         }
       : {};
-    const users = await User.find({ ...keyword })
-      .sort({ createdAt: -1 });
+    const users = await User.find({ ...keyword }).sort({ createdAt: -1 });
 
     res.status(200).json(users);
   } catch (error) {
@@ -238,7 +255,7 @@ export const deletUser = expressAsync(async (req, res) => {
 
 export const getUserProfileById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id);
     const { token } = req.body;
 
     if (user) {
@@ -279,13 +296,12 @@ export const updateUserRole = expressAsync(async (req, res) => {
   }
 });
 
-
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private
 export const updateProfile = expressAsync(async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id);
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
@@ -314,7 +330,7 @@ export const updateProfile = expressAsync(async (req, res) => {
 // @access  Private
 export const updatePassword = expressAsync(async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id);
     if (user) {
       user.password = req.body.password || user.password;
 

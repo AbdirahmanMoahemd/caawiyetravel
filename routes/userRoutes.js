@@ -12,7 +12,8 @@ import {
   updateUserRole,
   sendOtp,
   verifyOtp,
-  updateOtpAndVerify
+  updateOtpAndVerify,
+  deletMyAccount
 } from "../controllers/userController.js";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 
@@ -20,6 +21,7 @@ const router = express.Router();
 
 router.route("/").get(protect, admin, getAllUser).post(createUser);
 router.route("/register").post(createBuyerUser);
+router.route("/delete").post(deletMyAccount);
 router.route("/send-otp").post(sendOtp);
 router.route("/verify-otp").post(protect, verifyOtp);
 router.route("/update/otp/:id").put(protect, updateOtpAndVerify)
