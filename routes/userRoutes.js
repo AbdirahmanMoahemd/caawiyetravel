@@ -25,7 +25,7 @@ router.route("/delete").post(deletMyAccount);
 router.route("/send-otp").post(sendOtp);
 router.route("/verify-otp").post(protect, verifyOtp);
 router.route("/update/otp/:id").put(protect, updateOtpAndVerify)
-router.route("/:id").put(updateUser).delete(protect, admin, deletUser);
+router.route("/:id").put(updateUser).delete(protect, deletUser);
 router.route("/login").post(login);
 router.route("/profile/:id").post(getUserProfileById);
 router.route("/update/passwors/:id").put(updatePassword);
