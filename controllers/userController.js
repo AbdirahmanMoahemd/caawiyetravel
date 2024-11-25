@@ -242,7 +242,7 @@ export const deletUser = expressAsync(async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findByIdAndDelete(id, req.body);
+    const user = await User.findByIdAndDelete(id);
     if (user) {
       res.status(200).json({ message: "SucessFully Deleted" });
     } else {
