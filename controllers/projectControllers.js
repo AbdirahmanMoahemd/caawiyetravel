@@ -93,50 +93,50 @@ export const chargeToPay = expressAsync(async (req, res) => {
       project.chargedprice = price
       project.isCharged = true
       const updatedProject = project.save();
-      const config = {
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.PASS,
-        },
-      };
+      // const config = {
+      //   service: "gmail",
+      //   auth: {
+      //     user: process.env.EMAIL,
+      //     pass: process.env.PASS,
+      //   },
+      // };
   
-      let transporter = nodemailer.createTransport(config);
+      // let transporter = nodemailer.createTransport(config);
   
-      var mailGenerator = new Mailgen({
-        theme: "default",
-        product: {
-          // Appears in header & footer of e-mails
-          name: "Mailgen",
-          link: "https://mailgen.js/",
-          // Optional product logo
-          // logo: 'https://mailgen.js/img/logo.png'
-        },
-      });
+      // var mailGenerator = new Mailgen({
+      //   theme: "default",
+      //   product: {
+      //     // Appears in header & footer of e-mails
+      //     name: "Mailgen",
+      //     link: "https://mailgen.js/",
+      //     // Optional product logo
+      //     // logo: 'https://mailgen.js/img/logo.png'
+      //   },
+      // });
   
-      var email = {
-        body: {
-          title: "From Caawiye Consultant Ltd",
-          name: `Dear ${project.user}`,
-          intro: `We\'re very excited to have you!\nPlease pay \$${price} to approve your project.`,
+      // var email = {
+      //   body: {
+      //     title: "From Caawiye Consultant Ltd",
+      //     name: `Dear ${project.user}`,
+      //     intro: `We\'re very excited to have you!\nPlease pay \$${price} to approve your project.`,
           
 
          
   
-          outro: "THANKS",
-        },
-      };
+      //     outro: "THANKS",
+      //   },
+      // };
   
-      var emailBody = mailGenerator.generate(email);
+      // var emailBody = mailGenerator.generate(email);
   
-      let message = {
-        from: process.env.EMAIL,
-        to: gmail,
-        subject: "PAYMENT",
-        html: emailBody,
-      };
+      // let message = {
+      //   from: process.env.EMAIL,
+      //   to: gmail,
+      //   subject: "PAYMENT",
+      //   html: emailBody,
+      // };
   
-      transporter.sendMail(message);
+      // transporter.sendMail(message);
 
       res.status(200).json(updatedProject);
     }
@@ -170,55 +170,55 @@ export const createProject = expressAsync(async (req, res) => {
     });
     if (project) {
      
-        const config = {
-          service: "gmail",
-          auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASS,
-          },
-        };
+        // const config = {
+        //   service: "gmail",
+        //   auth: {
+        //     user: process.env.EMAIL,
+        //     pass: process.env.PASS,
+        //   },
+        // };
     
-        let transporter = nodemailer.createTransport(config);
+        // let transporter = nodemailer.createTransport(config);
     
-        var mailGenerator = new Mailgen({
-          theme: "default",
-          product: {
-            // Appears in header & footer of e-mails
-            name: "Mailgen",
-            link: "https://mailgen.js/",
-            // Optional product logo
-            // logo: 'https://mailgen.js/img/logo.png'
-          },
-        });
+        // var mailGenerator = new Mailgen({
+        //   theme: "default",
+        //   product: {
+        //     // Appears in header & footer of e-mails
+        //     name: "Mailgen",
+        //     link: "https://mailgen.js/",
+        //     // Optional product logo
+        //     // logo: 'https://mailgen.js/img/logo.png'
+        //   },
+        // });
     
-        var email = {
-          body: {
-            name: "Caawiye Consultant Ltd",
-            intro: "NEW PROJECT",
-            table: {
-              data: [
-                {
-                  projectId: project._id,
-                  projectOwner: owner,
-                },
-              ],
-            },
+        // var email = {
+        //   body: {
+        //     name: "Caawiye Consultant Ltd",
+        //     intro: "NEW PROJECT",
+        //     table: {
+        //       data: [
+        //         {
+        //           projectId: project._id,
+        //           projectOwner: owner,
+        //         },
+        //       ],
+        //     },
            
     
-            outro: "MAHADSANID",
-          },
-        };
+        //     outro: "MAHADSANID",
+        //   },
+        // };
     
-        var emailBody = mailGenerator.generate(email);
+        // var emailBody = mailGenerator.generate(email);
     
-        let message = {
-          from: process.env.EMAIL,
-          to: "Cacoltd2021@gmail.com",
-          subject: "NEW PROJECT",
-          html: emailBody,
-        };
+        // let message = {
+        //   from: process.env.EMAIL,
+        //   to: "Cacoltd2021@gmail.com",
+        //   subject: "NEW PROJECT",
+        //   html: emailBody,
+        // };
     
-        transporter.sendMail(message);
+        // transporter.sendMail(message);
       res.status(201).json(project);
     }
   } catch (error) {
@@ -282,57 +282,57 @@ export const updateProjectToPaid = expressAsync(async (req, res) => {
 
     const updatedProject = project.save();
     if (updatedProject) {
-      const config = {
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.PASS,
-        },
-      };
+    //   const config = {
+    //     service: "gmail",
+    //     auth: {
+    //       user: process.env.EMAIL,
+    //       pass: process.env.PASS,
+    //     },
+    //   };
   
-      let transporter = nodemailer.createTransport(config);
+    //   let transporter = nodemailer.createTransport(config);
   
-      var mailGenerator = new Mailgen({
-        theme: "default",
-        product: {
-          // Appears in header & footer of e-mails
-          name: "Mailgen",
-          link: "https://mailgen.js/",
-          // Optional product logo
-          // logo: 'https://mailgen.js/img/logo.png'
-        },
-      });
+    //   var mailGenerator = new Mailgen({
+    //     theme: "default",
+    //     product: {
+    //       // Appears in header & footer of e-mails
+    //       name: "Mailgen",
+    //       link: "https://mailgen.js/",
+    //       // Optional product logo
+    //       // logo: 'https://mailgen.js/img/logo.png'
+    //     },
+    //   });
   
-      var email = {
-        body: {
-          name: "Caawiye Consultant Ltd",
-          intro: "Payment For Project Approvel",
-          table: {
-            data: [
-              {
-                projectOwner: project.owner,
-                title: project.title,
-                paidAmount: project.chargedprice
-              },
-            ],
+    //   var email = {
+    //     body: {
+    //       name: "Caawiye Consultant Ltd",
+    //       intro: "Payment For Project Approvel",
+    //       table: {
+    //         data: [
+    //           {
+    //             projectOwner: project.owner,
+    //             title: project.title,
+    //             paidAmount: project.chargedprice
+    //           },
+    //         ],
             
-          },
+    //       },
          
   
-          outro: "MAHADSANID",
-        },
-      };
+    //       outro: "MAHADSANID",
+    //     },
+    //   };
   
-      var emailBody = mailGenerator.generate(email);
+    //   var emailBody = mailGenerator.generate(email);
   
-      let message = {
-        from: process.env.EMAIL,
-        to: "Cacoltd2021@gmail.com",
-        subject: "Payment For Project Approvel",
-        html: emailBody,
-      };
+    //   let message = {
+    //     from: process.env.EMAIL,
+    //     to: "Cacoltd2021@gmail.com",
+    //     subject: "Payment For Project Approvel",
+    //     html: emailBody,
+    //   };
   
-      transporter.sendMail(message);
+    //   transporter.sendMail(message);
       
     }
 
